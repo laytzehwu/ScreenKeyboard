@@ -2,8 +2,8 @@
 
 class ScreenKeyboard {
 
-    public static $SPACEBAR = " ";
-    public static $BACKSPACE = "\010";
+    const SPACEBAR = " ";
+    const BACKSPACE = "\010";
 
     private $cCurKey = 'A'; // Current key
     private static $aKeyMatrix = array(
@@ -28,11 +28,11 @@ class ScreenKeyboard {
     public function setCurKey($sKey) {
 
         switch($sKey) {
-            case self::$SPACEBAR:
-                $this->cCurKey = self::$SPACEBAR;
+            case self::SPACEBAR:
+                $this->cCurKey = self::SPACEBAR;
                 break;
-            case self::$BACKSPACE:
-                $this->cCurKey = self::$BACKSPACE;
+            case self::BACKSPACE:
+                $this->cCurKey = self::BACKSPACE;
                 break;
             default:
                 $this->cCurKey = substr(strval($sKey), 0,1);
@@ -67,16 +67,16 @@ class ScreenKeyboard {
             case 3:
 
                 if($iCol > 7 && $iCol < 16) {
-                    $sKey = self::$SPACEBAR;
+                    $sKey = self::SPACEBAR;
                 } else if($iCol > 23) {
-                    $sKey = self::$BACKSPACE;
+                    $sKey = self::BACKSPACE;
                 } else {
                     $sKey = self::$aKeyMatrix[$iRow][$iCol];
                 }
                 if($iCol < 8) {
                     $sKey = self::$aKeyMatrix[$iRow][$iCol];
                 } else if ($iCol < 16) {
-                    $sKey = self::$SPACEBAR;
+                    $sKey = self::SPACEBAR;
                 } else if ($iCol < 24) {
                     $sKey = self::$aKeyMatrix[$iRow][$iCol];
                 }
@@ -123,10 +123,10 @@ class ScreenKeyboard {
     public function keyOnTop($sKey) {
         $sKey = self::validKey($sKey);
         switch($sKey) {
-            case self::$SPACEBAR:
+            case self::SPACEBAR:
                 $sNextKey = "#";
                 break;
-            case self::$BACKSPACE:
+            case self::BACKSPACE:
                 $sNextKey = "-";
                 break;
             default:
@@ -156,10 +156,10 @@ class ScreenKeyboard {
     public function keyAbove($sKey) {
         $sKey = self::validKey($sKey);
         switch($sKey) {
-            case self::$SPACEBAR:
+            case self::SPACEBAR:
                 $sNextKey = "I";
                 break;
-            case self::$BACKSPACE:
+            case self::BACKSPACE:
                 $sNextKey = "Z";
                 break;
             default:
@@ -198,10 +198,10 @@ class ScreenKeyboard {
     */
     public function keyRight($sKey) {
         switch($sKey) {
-            case self::$SPACEBAR:
+            case self::SPACEBAR:
                 $sNextKey = ".";
                 break;
-            case self::$BACKSPACE:
+            case self::BACKSPACE:
                 $sNextKey = "`";
                 break;
             default:

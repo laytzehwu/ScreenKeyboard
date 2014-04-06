@@ -20,10 +20,10 @@ class TestScreenKeyboard extends PHPUnit_Framework_TestCase
         $this->assertEquals('1', $keyboard->getCurKey());
 
         // Special keys testing
-        $keyboard->setCurKey(ScreenKeyboard::$SPACEBAR);
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
-        $keyboard->setCurKey(ScreenKeyboard::$BACKSPACE);
-        $this->assertEquals(ScreenKeyboard::$BACKSPACE, $keyboard->getCurKey());
+        $keyboard->setCurKey(ScreenKeyboard::SPACEBAR);
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
+        $keyboard->setCurKey(ScreenKeyboard::BACKSPACE);
+        $this->assertEquals(ScreenKeyboard::BACKSPACE, $keyboard->getCurKey());
     }
 
     public function testGetPositionKey() {
@@ -49,7 +49,7 @@ class TestScreenKeyboard extends PHPUnit_Framework_TestCase
         }
 
         // Sample test on negative position
-        $this->assertEquals(ScreenKeyBoard::$BACKSPACE, ScreenKeyboard::getPositionKey(-1,-1));
+        $this->assertEquals(ScreenKeyboard::BACKSPACE, ScreenKeyboard::getPositionKey(-1,-1));
         $this->assertEquals("Y", ScreenKeyBoard::getPositionKey(0,-2));
         $this->assertEquals("~", ScreenKeyBoard::getPositionKey(-1,1));
 
@@ -79,17 +79,17 @@ class TestScreenKeyboard extends PHPUnit_Framework_TestCase
         $sTestString = "`~[]{}<>        .,;:'\"_=\010\010";
         for($i=0;$i<26;$i++) {
             $sKeyToTest = $sTestString[$i];
-            if($sKeyToTest == ScreenKeyboard::$SPACEBAR) continue;
-            if($sKeyToTest == ScreenKeyboard::$BACKSPACE) continue;
+            if($sKeyToTest == ScreenKeyboard::SPACEBAR) continue;
+            if($sKeyToTest == ScreenKeyboard::BACKSPACE) continue;
             list($iRow, $iCol) = ScreenKeyboard::getKeyPosition($sKeyToTest);
             $this->assertEquals(3, $iRow);
             $this->assertEquals($i, $iCol);
         }
         // Special key
-        list($iRow, $iCol) = ScreenKeyboard::getKeyPosition(ScreenKeyboard::$SPACEBAR);
+        list($iRow, $iCol) = ScreenKeyboard::getKeyPosition(ScreenKeyboard::SPACEBAR);
         $this->assertEquals(3, $iRow);
         $this->assertEquals(8, $iCol);
-        list($iRow, $iCol) = ScreenKeyboard::getKeyPosition(ScreenKeyboard::$BACKSPACE);
+        list($iRow, $iCol) = ScreenKeyboard::getKeyPosition(ScreenKeyboard::BACKSPACE);
         $this->assertEquals(3, $iRow);
         $this->assertEquals(24, $iCol);
 
@@ -114,48 +114,48 @@ class TestScreenKeyboard extends PHPUnit_Framework_TestCase
         $this->assertEquals('B', $keyboard->getCurKey());
 
         // Spacebar
-        $keyboard->setCurKey(ScreenKeyboard::$SPACEBAR);
+        $keyboard->setCurKey(ScreenKeyboard::SPACEBAR);
         $keyboard->moveUp();
         $this->assertEquals('#', $keyboard->getCurKey());
 
         // To space bar
         $keyboard->setCurKey("I");
         $keyboard->moveUp();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
         $keyboard->setCurKey("J");
         $keyboard->moveUp();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
         $keyboard->setCurKey("K");
         $keyboard->moveUp();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
         $keyboard->setCurKey("L");
         $keyboard->moveUp();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
         $keyboard->setCurKey("M");
         $keyboard->moveUp();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
         $keyboard->setCurKey("N");
         $keyboard->moveUp();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
         $keyboard->setCurKey("O");
         $keyboard->moveUp();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
         $keyboard->setCurKey("P");
         $keyboard->moveUp();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
 
         // Backspace
-        $keyboard->setCurKey(ScreenKeyboard::$BACKSPACE);
+        $keyboard->setCurKey(ScreenKeyboard::BACKSPACE);
         $keyboard->moveUp();
         $this->assertEquals('-', $keyboard->getCurKey());
 
         // To Backspace
         $keyboard->setCurKey("Y");
         $keyboard->moveUp();
-        $this->assertEquals(ScreenKeyboard::$BACKSPACE, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::BACKSPACE, $keyboard->getCurKey());
         $keyboard->setCurKey("Z");
         $keyboard->moveUp();
-        $this->assertEquals(ScreenKeyboard::$BACKSPACE, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::BACKSPACE, $keyboard->getCurKey());
 
         // Test move over keyboard
         $keyboard->setCurKey('A');
@@ -175,48 +175,48 @@ class TestScreenKeyboard extends PHPUnit_Framework_TestCase
         $this->assertEquals('b', $keyboard->getCurKey());
 
         // Spacebar
-        $keyboard->setCurKey(ScreenKeyboard::$SPACEBAR);
+        $keyboard->setCurKey(ScreenKeyboard::SPACEBAR);
         $keyboard->moveDown();
         $this->assertEquals('I', $keyboard->getCurKey());
 
         // To spacebar
         $keyboard->setCurKey("8");
         $keyboard->moveDown();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
         $keyboard->setCurKey("9");
         $keyboard->moveDown();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
         $keyboard->setCurKey("!");
         $keyboard->moveDown();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
         $keyboard->setCurKey("@");
         $keyboard->moveDown();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
         $keyboard->setCurKey("#");
         $keyboard->moveDown();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
         $keyboard->setCurKey("$");
         $keyboard->moveDown();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
         $keyboard->setCurKey("%");
         $keyboard->moveDown();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
         $keyboard->setCurKey("^");
         $keyboard->moveDown();
-        $this->assertEquals(ScreenKeyboard::$SPACEBAR, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::SPACEBAR, $keyboard->getCurKey());
 
         // Backspace
-        $keyboard->setCurKey(ScreenKeyboard::$BACKSPACE);
+        $keyboard->setCurKey(ScreenKeyboard::BACKSPACE);
         $keyboard->moveDown();
         $this->assertEquals('Z', $keyboard->getCurKey());
 
         // To backspace
         $keyboard->setCurKey("+");
         $keyboard->moveDown();
-        $this->assertEquals(ScreenKeyboard::$BACKSPACE, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::BACKSPACE, $keyboard->getCurKey());
         $keyboard->setCurKey("-");
         $keyboard->moveDown();
-        $this->assertEquals(ScreenKeyboard::$BACKSPACE, $keyboard->getCurKey());
+        $this->assertEquals(ScreenKeyboard::BACKSPACE, $keyboard->getCurKey());
 
         // Test move over keyboard
         $keyboard->setCurKey('`');
@@ -229,8 +229,8 @@ class TestScreenKeyboard extends PHPUnit_Framework_TestCase
         $this->assertTrue(ScreenKeyboard::keysInSameRow("B", "A"));
         $this->assertTrue(ScreenKeyboard::keysInSameRow("A", "B"));
         $this->assertFalse(ScreenKeyboard::keysInSameRow("A", "0"));
-        $this->assertTrue(ScreenKeyboard::keysInSameRow(ScreenKeyboard::$SPACEBAR, ScreenKeyboard::$BACKSPACE));
-        $this->assertTrue(ScreenKeyboard::keysInSameRow(ScreenKeyboard::$BACKSPACE, ScreenKeyboard::$SPACEBAR));
+        $this->assertTrue(ScreenKeyboard::keysInSameRow(ScreenKeyboard::SPACEBAR, ScreenKeyboard::BACKSPACE));
+        $this->assertTrue(ScreenKeyboard::keysInSameRow(ScreenKeyboard::BACKSPACE, ScreenKeyboard::SPACEBAR));
     }
 }
 ?>
