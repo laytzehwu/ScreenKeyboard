@@ -5,5 +5,6 @@ function __autoload($class_name) {
 }
 
 __autoload("ScreenKeyboard");
+__autoload("KeyboardPathFinder");
 
 ?>
