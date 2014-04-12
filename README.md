@@ -1,10 +1,13 @@
-Screen keyboard simulator and optimum path finder.
- PHPUnit is used for the unit test and run below command to see unit test result:
- sh test.sh
-
- Class Screenkeyboard is the screen keyboard simulator which simulate key moving.
- Class KeyboardPathFinder find the optimum path of input string. Below is the sample code of finding optimum path:
-
+<h1>Screen keyboard simulator and optimum path finder.</h1>
+<div>
+<p>PHPUnit is used for the unit test and run below command to see unit test result:</p>
+ <center>sh test.sh</center>
+</div>
+<ul>
+ <li>Class Screenkeyboard is the screen keyboard simulator which simulate key moving.</li>
+ <li>Class KeyboardPathFinder find the optimum path of input string. Below is the sample code of finding optimum path:</li>
+</ul>
+<pre>
 $sInput = ‘find the optimum path for this sentence’;
 $oFinder = new KeyboardPathFinder($sInput);
 $aPath = $oFinder->getFoundPath();
@@ -28,3 +31,4 @@ while(list($iIdx, $iAction) = each($aPath)) {
             break;
     }
 }
+</pre>
