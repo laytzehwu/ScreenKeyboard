@@ -2,11 +2,12 @@
 require_once("ScreenKeyboard.php");
 class KeyboardPathFinder {
 
+    // *************************************************************************** Static
     const LEFT=1;
     const RIGHT=2;
     const UP=3;
     const DOWN=4;
-
+    const ENTER = 5;
     /**
      * Find path between keys
      * @param - String - Starting key
@@ -24,6 +25,7 @@ class KeyboardPathFinder {
         }
 
         $bTheyAreInSameRow = ScreenKeyboard::keysInSameRow($sKey1, $sKey2);
+        $arrNextKeys = array();
         if($bTheyAreInSameRow) {
             $sLeftKey = ScreenKeyboard::keyLeft($sKey1);
             if($sLeftKey === $sKey2) {
@@ -37,12 +39,14 @@ class KeyboardPathFinder {
                 return true;
             }
 
-            $sNextKey1 = $sLeftKey;
-            $aNewPath1 = $aPath;
-            $aNewPath1[] = self::LEFT;
-            $sNextKey2 = $sRightKey;
-            $aNewPath2 = $aPath;
-            $aNewPath2[] = self::RIGHT;
+            $arrNextKeys[] = array(
+                "key" => $sLeftKey,
+                "path" => array_merge($aPath, array(self::LEFT))
+            );
+            $arrNextKeys[] = array(
+                "key" => $sRightKey,
+                "path" => array_merge($aPath, array(self::RIGHT))
+            );
 
         } else {
             $sTopKey = ScreenKeyboard::keyOnTop($sKey1);
@@ -56,36 +60,44 @@ class KeyboardPathFinder {
                 $aPath[] = self::DOWN;
                 return true;
             }
-            $sNextKey1 = $sTopKey;
-            $aNewPath1 = $aPath;
-            $aNewPath1[] = self::UP;
-            $sNextKey2 = $sBottomKey;
-            $aNewPath2 = $aPath;
-            $aNewPath2[] = self::DOWN;
-        }
 
-        $bFoundInPath1 = false;
-        $bFoundInPath2 = false;
+            $arrNextKeys[] = array(
+                "key" => $sTopKey,
+                "path" => array_merge($aPath, array(self::UP))
+            );
+            $arrNextKeys[] = array(
+                "key" => $sBottomKey,
+                "path" => array_merge($aPath, array(self::DOWN))
+            );
 
-        if(self::seekKeysPath($sNextKey1, $sKey2, $aNewPath1, $sTriedkeys)) {
-            $bFoundInPath1 = true;
         }
-        if(self::seekKeysPath($sNextKey2, $sKey2, $aNewPath2, $sTriedkeys)) {
-            $bFoundInPath2 = true;
-        }
-        if($bFoundInPath1 && $bFoundInPath2) {
-            if(count($aNewPath1) < count($aNewPath2)) {
-                // Take the shorter
-                $aPath = $aNewPath1;
-            } else {
-                $aPath = $aNewPath2;
+        reset($arrNextKeys);
+        while(list($iIdx, $arrNextTry) = each($arrNextKeys)) {
+            if (!self::seekKeysPath($arrNextTry["key"], $sKey2, $arrNextTry["path"], $sTriedkeys)) {
+                // Clear the fail try
+                unset($arrNextKeys[$iIdx]);
+                continue;
             }
-        } else if($bFoundInPath1) {
-            $aPath = $aNewPath1;
-        } else if($bFoundInPath2) {
-            $aPath = $aNewPath2;
+            $arrNextKeys[$iIdx] = $arrNextTry;
         }
-        return $bFoundInPath1 || $bFoundInPath2;
+        if (empty($arrNextKeys)) {
+            return false;
+        }
+
+        // Take the update from next try
+        $iPreviousStep = count($aPath);
+        reset($arrNextKeys);
+        while(list($iIdx, $arrNextTry) = each($arrNextKeys)) {
+            if($iPreviousStep === count($aPath)) {
+                $aPath = $arrNextTry["path"];
+                continue;
+            }
+
+            if(count($aPath) < count($arrNextTry["path"])) continue;
+            $aPath = $arrNextTry["path"];
+        }
+        return true;
+
     }
 
     /**
@@ -105,6 +117,48 @@ class KeyboardPathFinder {
             return $aPath;
         }
         return null;
+    }
+    // ******************************************************************** End of Static
+    private $arrPath;
+    /**
+     * Constructor of KeyboardPathFinder. It start finding path when the input is passing in.
+     * @param - String - Input
+    */
+    function __construct($sInput="") {
+        $this->arrPath = array();
+        if(!empty($sInput)) $this->findOptimumPath($sInput);
+    }
+    /**
+     * Find input optimum path
+     * @param - String - Input
+    */
+    public function findOptimumPath($sInput) {
+        $sInput = strval($sInput);
+        $iLen = strlen($sInput);
+        if($iLen == 0) throw new Exception('Empty input!');
+        $this->arrPath = array();
+
+        $sCurKey = ScreenKeyboard::validKey($sInput);
+        $aPath = self::getKeyToKeyPath($sCurKey, $sCurKey);
+        $this->arrPath[] = self::ENTER;
+        while($iLen > 1) {
+            $sInput = substr($sInput, 1);
+            $sNextKey = ScreenKeyboard::validKey($sInput);
+            $aPath = self::getKeyToKeyPath($sCurKey, $sNextKey);
+            if(count($aPath) > 0) {
+                $this->arrPath = array_merge($this->arrPath, $aPath);
+            }
+            $this->arrPath[] = self::ENTER;
+            $sCurKey = $sNextKey;
+            $iLen = strlen($sInput);
+        }
+    }
+    /**
+     * Return found path
+     * @return - Array - Path
+    */
+    public function getFoundPath() {
+        return $this->arrPath;
     }
 }
 ?>

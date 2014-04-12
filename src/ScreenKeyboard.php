@@ -95,7 +95,7 @@ class ScreenKeyboard {
         if($sKey === '') {
             throw new Exception('Empty key!');
         }
-        return $sKey;
+        return $sKey[0];
     }
 
     /**
