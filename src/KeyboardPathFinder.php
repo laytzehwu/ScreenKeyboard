@@ -24,21 +24,34 @@ class KeyboardPathFinder {
             return false;
         }
 
+        // Try keys around
+        $sLeftKey = ScreenKeyboard::keyLeft($sKey1);
+        if($sLeftKey === $sKey2) {
+            $aPath[] = self::LEFT;
+            return true;
+        }
+
+        $sRightKey = ScreenKeyboard::keyRight($sKey1);
+        if($sRightKey === $sKey2) {
+            $aPath[] = self::RIGHT;
+            return true;
+        }
+
+        $sTopKey = ScreenKeyboard::keyOnTop($sKey1);
+        if($sTopKey === $sKey2) {
+            $aPath[] = self::UP;
+            return true;
+        }
+
+        $sBottomKey = ScreenKeyboard::keyAbove($sKey1);
+        if($sBottomKey === $sKey2) {
+            $aPath[] = self::DOWN;
+            return true;
+        }
+
         $bTheyAreInSameRow = ScreenKeyboard::keysInSameRow($sKey1, $sKey2);
         $arrNextKeys = array();
         if($bTheyAreInSameRow) {
-            $sLeftKey = ScreenKeyboard::keyLeft($sKey1);
-            if($sLeftKey === $sKey2) {
-                $aPath[] = self::LEFT;
-                return true;
-            }
-
-            $sRightKey = ScreenKeyboard::keyRight($sKey1);
-            if($sRightKey === $sKey2) {
-                $aPath[] = self::RIGHT;
-                return true;
-            }
-
             $arrNextKeys[] = array(
                 "key" => $sLeftKey,
                 "path" => array_merge($aPath, array(self::LEFT))
@@ -48,18 +61,20 @@ class KeyboardPathFinder {
                 "path" => array_merge($aPath, array(self::RIGHT))
             );
 
-        } else {
-            $sTopKey = ScreenKeyboard::keyOnTop($sKey1);
-            if($sTopKey === $sKey2) {
-                $aPath[] = self::UP;
-                return true;
+            // Add space bar retry
+            if($sTopKey === ScreenKeyboard::SPACEBAR) {
+                $arrNextKeys[] = array(
+                    "key" => $sTopKey,
+                    "path" => array_merge($aPath, array(self::UP))
+                );
+            } else if($sBottomKey === ScreenKeyboard::SPACEBAR) {
+                $arrNextKeys[] = array(
+                    "key" => $sBottomKey,
+                    "path" => array_merge($aPath, array(self::DOWN))
+                );
             }
 
-            $sBottomKey = ScreenKeyboard::keyAbove($sKey1);
-            if($sBottomKey === $sKey2) {
-                $aPath[] = self::DOWN;
-                return true;
-            }
+        } else {
 
             $arrNextKeys[] = array(
                 "key" => $sTopKey,
@@ -71,6 +86,8 @@ class KeyboardPathFinder {
             );
 
         }
+
+        // Next try
         reset($arrNextKeys);
         while(list($iIdx, $arrNextTry) = each($arrNextKeys)) {
             if (!self::seekKeysPath($arrNextTry["key"], $sKey2, $arrNextTry["path"], $sTriedkeys)) {
