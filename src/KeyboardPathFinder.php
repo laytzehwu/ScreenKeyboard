@@ -50,6 +50,7 @@ class KeyboardPathFinder {
         }
 
         $bTheyAreInSameRow = ScreenKeyboard::keysInSameRow($sKey1, $sKey2);
+        // Plan to have next tries
         $arrNextKeys = array();
         if($bTheyAreInSameRow) {
             $arrNextKeys[] = array(
@@ -110,7 +111,8 @@ class KeyboardPathFinder {
                 continue;
             }
 
-            if(count($aPath) < count($arrNextTry["path"])) continue;
+            if(count($aPath) <= count($arrNextTry["path"])) continue;
+
             $aPath = $arrNextTry["path"];
         }
         return true;

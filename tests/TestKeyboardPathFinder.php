@@ -44,7 +44,6 @@ class TestKeyboardPathFinder extends PHPUnit_Framework_TestCase{
         $this->assertEquals($aPath, array(KeyboardPathFinder::UP));
         $aPath = KeyboardPathFinder::getKeyToKeyPath(" ", "L");
         $this->assertEquals(count($aPath), 4);
-        $this->assertEquals($aPath, array(KeyboardPathFinder::DOWN, KeyboardPathFinder::RIGHT, KeyboardPathFinder::RIGHT, KeyboardPathFinder::RIGHT));
     }
 
     public function testFindFunctionCalledWhenConstruct() {
@@ -139,10 +138,10 @@ class TestKeyboardPathFinder extends PHPUnit_Framework_TestCase{
         $aPath = $oFinder->getFoundPath();
         $this->assertEquals(array(
             KeyboardPathFinder::ENTER,
-            KeyboardPathFinder::DOWN,
-            KeyboardPathFinder::RIGHT,
-            KeyboardPathFinder::RIGHT,
-            KeyboardPathFinder::RIGHT,
+            KeyboardPathFinder::UP,
+            KeyboardPathFinder::UP,
+            KeyboardPathFinder::UP,
+            KeyboardPathFinder::LEFT,
             KeyboardPathFinder::ENTER), $aPath);
 
         $oFinder = new KeyboardPathFinder("PI");
@@ -151,6 +150,20 @@ class TestKeyboardPathFinder extends PHPUnit_Framework_TestCase{
             KeyboardPathFinder::ENTER,
             KeyboardPathFinder::UP,
             KeyboardPathFinder::DOWN,
+            KeyboardPathFinder::ENTER), $aPath);
+
+        $oFinder = new KeyboardPathFinder("IQ");
+        $aPath = $oFinder->getFoundPath();
+        $this->assertEquals(array(
+            KeyboardPathFinder::ENTER,
+            KeyboardPathFinder::RIGHT,
+            KeyboardPathFinder::RIGHT,
+            KeyboardPathFinder::RIGHT,
+            KeyboardPathFinder::RIGHT,
+            KeyboardPathFinder::RIGHT,
+            KeyboardPathFinder::RIGHT,
+            KeyboardPathFinder::RIGHT,
+            KeyboardPathFinder::RIGHT,
             KeyboardPathFinder::ENTER), $aPath);
     }
 
