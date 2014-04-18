@@ -86,6 +86,17 @@ class KeyboardPathFinder {
                 "path" => array_merge($aPath, array(self::DOWN))
             );
 
+            if($sKey1 === ScreenKeyboard::SPACEBAR) {
+                $arrNextKeys[] = array(
+                    "key" => $sLeftKey,
+                    "path" => array_merge($aPath, array(self::LEFT))
+                );
+                $arrNextKeys[] = array(
+                    "key" => $sRightKey,
+                    "path" => array_merge($aPath, array(self::RIGHT))
+                );
+            }
+
         }
 
         // Next try

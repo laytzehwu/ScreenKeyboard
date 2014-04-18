@@ -154,16 +154,20 @@ class TestKeyboardPathFinder extends PHPUnit_Framework_TestCase{
 
         $oFinder = new KeyboardPathFinder("IQ");
         $aPath = $oFinder->getFoundPath();
+        $this->assertEquals(5, count($aPath));
         $this->assertEquals(array(
             KeyboardPathFinder::ENTER,
+            KeyboardPathFinder::UP,
             KeyboardPathFinder::RIGHT,
+            KeyboardPathFinder::DOWN,
+            KeyboardPathFinder::ENTER), $aPath);
+
+        $oFinder = new KeyboardPathFinder("7&");
+        $this->assertEquals(array(
+            KeyboardPathFinder::ENTER,
+            KeyboardPathFinder::UP,
             KeyboardPathFinder::RIGHT,
-            KeyboardPathFinder::RIGHT,
-            KeyboardPathFinder::RIGHT,
-            KeyboardPathFinder::RIGHT,
-            KeyboardPathFinder::RIGHT,
-            KeyboardPathFinder::RIGHT,
-            KeyboardPathFinder::RIGHT,
+            KeyboardPathFinder::DOWN,
             KeyboardPathFinder::ENTER), $aPath);
     }
 
